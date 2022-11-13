@@ -99,11 +99,11 @@ class DialogueBox extends FlxSpriteGroup
 
 	public function dialoguePath(file:String):String
 	{
-		var dialoguePath = SUtil.getPath() + Paths.file('assets/images/dialogue/portraits/$curCharacter/$file');
-		var truePath = SUtil.getPath() + Paths.file(file);
+		var dialoguePath = Paths.file('assets/images/dialogue/portraits/$curCharacter/$file');
+		var truePath = Paths.file(file);
 
 		// load the json file
-		if (sys.FileSystem.exists(dialoguePath))
+		if (Assets.exists(dialoguePath))
 			return dialoguePath;
 		else
 			return truePath;
@@ -231,10 +231,10 @@ class DialogueBox extends FlxSpriteGroup
 			curBoxState = newState;
 
 			// get the path to the json
-			var boxJson = SUtil.getPath() + Paths.file('images/dialogue/boxes/$curBox/$curBox.json');
+			var boxJson = Paths.file('images/dialogue/boxes/$curBox/$curBox.json');
 
 			// load the json and sprite
-			boxData = haxe.Json.parse(sys.io.File.getContent(boxJson));
+			boxData = haxe.Json.parse(Assets.getText(boxJson));
 			box.frames = Paths.getSparrowAtlas('dialogue/boxes/$curBox/$curBox');
 
 			// get the states sectioon
@@ -317,10 +317,10 @@ class DialogueBox extends FlxSpriteGroup
 			{
 				// made the curCharacter the new character
 				curCharacter = newChar;
-				var portraitJson = SUtil.getPath() + Paths.file('images/dialogue/portraits/$curCharacter/$curCharacter.json');
+				var portraitJson = Paths.file('images/dialogue/portraits/$curCharacter/$curCharacter.json');
 
 				// load the json file
-				if (sys.FileSystem.exists(portraitJson))
+				if (Assets.exists(portraitJson))
 				{
 					portraitData = haxe.Json.parse(sys.io.File.getContent(portraitJson));
 					portrait.frames = Paths.getSparrowAtlas('dialogue/portraits/$curCharacter/$curCharacter');
