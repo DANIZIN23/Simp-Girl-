@@ -15,6 +15,7 @@ import openfl.system.System;
 import openfl.utils.AssetType;
 import openfl.utils.Assets as OpenFlAssets;
 import sys.FileSystem;
+import openfl.utils.Assets;
 import sys.io.File;
 
 class Paths
@@ -116,8 +117,8 @@ class Paths
 
 	public static function returnGraphic(key:String, ?library:String, ?textureCompression:Bool = false)
 	{
-		var path = SUtil.getPath() + getPath('images/$key.png', IMAGE, library);
-		if (FileSystem.exists(path))
+		var path = getPath('images/$key.png', IMAGE, library);
+		if (Assets.exists(path))
 		{
 			if (!currentTrackedAssets.exists(key))
 			{
@@ -150,11 +151,11 @@ class Paths
 
 	public static function returnSound(path:String, key:String, ?library:String) {
 		// I hate this so god damn much
-		var gottenPath:String = SUtil.getPath() + getPath('$path/$key.$SOUND_EXT', SOUND, library);
+		var gottenPath:String = getPath('$path/$key.$SOUND_EXT', SOUND, library);
 		gottenPath = gottenPath.substring(gottenPath.indexOf(':') + 1, gottenPath.length);
 		// trace(gottenPath);
 		if (!currentTrackedSounds.exists(gottenPath))
-			currentTrackedSounds.set(gottenPath, Sound.fromFile('./' + gottenPath));
+			currentTrackedSounds.set(gottenPath, Sound.fromFile(gottenPath));
 		localTrackedAssets.push(key);
 		return currentTrackedSounds.get(gottenPath);
 	}
@@ -187,7 +188,7 @@ class Paths
 		}*/
 
 		var levelPath = getLibraryPathForce(file, "mods");
-		if (OpenFlAssets.exists(levelPath, type))
+		if (Assets.exists(levelPath, type))
 			return levelPath;
 
 		return getPreloadPath(file);
@@ -219,7 +220,7 @@ class Paths
 
 	inline static function getPreloadPath(file:String) {
 		var returnPath:String = 'assets/$file';
-		if (!FileSystem.exists(SUtil.getPath() + returnPath))
+		if (!Assets.exists(returnPath))
 			returnPath = CoolUtil.swapSpaceDash(returnPath);
 		return returnPath;
 	}
@@ -291,7 +292,7 @@ class Paths
 
 	inline static public function getSparrowAtlas(key:String, ?library:String) {
 		var graphic:FlxGraphic = returnGraphic(key, library);
-		return (FlxAtlasFrames.fromSparrow(graphic, File.getContent(SUtil.getPath() + file('images/$key.xml', library))));
+		return (FlxAtlasFrames.fromSparrow(graphic, Assets.getText(file('images/$key.xml', library))));
 	}
 
 	inline static public function getPackerAtlas(key:String, ?library:String)
