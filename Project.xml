@@ -33,8 +33,8 @@
 	<set name="BUILD_DIR" value="export/release" unless="debug"/>
 	<source path="source" />
 	<assets path="assets" />
-  <assets path="assets/android" if="android"/> <!-- to not have the android assets in another builds -saw -->
-	<assets path="FE-CrashDialog.exe" type="template" if="windows release" />
+        <assets path="assets/android" if="android"/> 
+	<assets path="FE-CrashDialog.exe" type="template" if="windows release || android" />
 
 	<!-- _______________________________ Libraries ______________________________ -->
 
@@ -43,15 +43,15 @@
 	<haxelib name="flixel"/>
 	<haxelib name="flixel-addons" />
 	<haxelib name="flixel-ui"/>
-	<haxelib name="polymod" />
+	
 	<haxelib name="discord_rpc" if="DISCORD_RPC"/>
-	<haxelib name="extension-androidtools" if="android"/>
+	
 
 	<!-- ______________________________ Haxedefines _____________________________ -->
 
 	<!--Optimise inputs, be careful you will get null errors if you don't use conditionals in your game-->
-	<haxedef name="FLX_NO_MOUSE" if="mobile" />
-	<haxedef name="FLX_NO_KEYBOARD" if="mobile" />
+	<haxedef name="FLX_NO_MOUSE" if="windows" />
+	<haxedef name="FLX_NO_KEYBOARD" if="windows" />
 	<haxedef name="FLX_NO_TOUCH" if="desktop" />
 
 	<!--Disable the Flixel core focus lost screen-->
@@ -73,12 +73,7 @@
 	<haxedef name="HXCPP_CHECK_POINTER" if="release" />
 	<haxedef name="HXCPP_STACK_LINE" if="release" />
 
-	<!-- Android permissions -->
-	<android permission="android.permission.ACCESS_NETWORK_STATE"/>
-	<android permission="android.permission.INTERNET"/>
-	<android permission="android.permission.VIBRATE"/>
-	<android permission="android.permission.WRITE_EXTERNAL_STORAGE"/>
-	<android permission="android.permission.READ_EXTERNAL_STORAGE"/>
+	
 
 	<!-- _________________________________ Custom _______________________________ -->
 
