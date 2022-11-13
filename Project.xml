@@ -44,7 +44,7 @@
 	<haxelib name="flixel-addons" />
 	<haxelib name="flixel-ui"/>
 	
-	<haxelib name="discord_rpc" if="!html5"/>
+	<haxelib name="discord_rpc" if="desktop"/>
 	
 
 	<!-- ______________________________ Haxedefines _____________________________ -->
