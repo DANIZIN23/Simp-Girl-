@@ -1,11 +1,5 @@
 package meta;
 
-#if android
-import android.AndroidControls;
-import android.flixel.FlxVirtualPad;
-import flixel.input.actions.FlxActionInput;
-import flixel.util.FlxDestroyUtil;
-#end
 import flixel.FlxG;
 import flixel.FlxSubState;
 import flixel.addons.transition.FlxTransitionableState;
@@ -15,7 +9,12 @@ import meta.*;
 import meta.data.*;
 import meta.data.Conductor.BPMChangeEvent;
 import meta.data.dependency.FNFUIState;
-
+#if android
+import android.AndroidControls;
+import android.flixel.FlxVirtualPad;
+import flixel.input.actions.FlxActionInput;
+import flixel.util.FlxDestroyUtil;
+#end
 /* 
 	Music beat state happens to be the first thing on my list of things to add, it just so happens to be the backbone of
 	most of the project in its entirety. It handles a couple of functions that have to do with actual music and songs and such.
@@ -142,8 +141,7 @@ class MusicBeatState extends FNFUIState
 	{
 		// dump
 		Paths.clearStoredMemory();
-		if ((!Std.isOfType(this,meta.state.PlayState)) 
-		&& (!Std.isOfType(this, meta.state.charting.OriginalChartingState)))
+		if ((!Std.isOfType(this, meta.state.PlayState)) && (!Std.isOfType(this, meta.state.charting.OriginalChartingState)))
 			Paths.clearUnusedMemory();
 
 		if (transIn != null)
@@ -170,27 +168,29 @@ class MusicBeatState extends FNFUIState
 		updateCurStep();
 		updateBeat();
 
-		// delta time bullshit 
+		// delta time bullshit
 		var trueStep:Int = curStep;
 		for (i in storedSteps)
 			if (i < oldStep)
 				storedSteps.remove(i);
-		for (i in oldStep...trueStep) {
-			if (!storedSteps.contains(i) && i > 0) {
+		for (i in oldStep...trueStep)
+		{
+			if (!storedSteps.contains(i) && i > 0)
+			{
 				curStep = i;
 				stepHit();
 				skippedSteps.push(i);
 			}
 		}
-		if (skippedSteps.length > 0) {
+		if (skippedSteps.length > 0)
+		{
 			trace('skipped steps $skippedSteps');
 			skippedSteps = [];
 		}
 		curStep = trueStep;
 
 		//
-		if (oldStep != curStep && curStep > 0 
-			&& !storedSteps.contains(curStep)) 
+		if (oldStep != curStep && curStep > 0 && !storedSteps.contains(curStep))
 			stepHit();
 		oldStep = curStep;
 	}
@@ -224,7 +224,7 @@ class MusicBeatState extends FNFUIState
 	{
 		if (curStep % 4 == 0)
 			beatHit();
-		
+
 		// trace('step $curStep');
 
 		if (!storedSteps.contains(curStep))
@@ -308,7 +308,6 @@ class MusicBeatSubState extends FlxSubState
 		}
 		#end
 	}
-
 	override function update(elapsed:Float)
 	{
 		// everyStep();
