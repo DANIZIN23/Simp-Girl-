@@ -433,6 +433,7 @@ class PlayState extends MusicBeatState
 
 		#if android
 		addAndroidControls();
+		androidControls.visible = true;
 		#end
 
 		//
@@ -1907,9 +1908,7 @@ class PlayState extends MusicBeatState
 
 	function endSong():Void
 	{
-	  #if android
-	  androidControls.visible = false;
-	  #end
+	  
 		canPause = false;
 		songMusic.volume = 0;
 		vocals.volume = 0;
@@ -2060,12 +2059,12 @@ class PlayState extends MusicBeatState
 	}
 
 	function callTextbox() {
-		var dialogPath = SUtil.getPath() + Paths.json(SONG.song.toLowerCase() + '/dialogue');
-		if (sys.FileSystem.exists(dialogPath))
+		var dialogPath = Paths.json(SONG.song.toLowerCase() + '/dialogue');
+		if (Assets.exists(dialogPath))
 		{
 			startedCountdown = false;
 
-			dialogueBox = DialogueBox.createDialogue(sys.io.File.getContent(dialogPath));
+			dialogueBox = DialogueBox.createDialogue(Assets.getText(dialogPath));
 			dialogueBox.cameras = [dialogueHUD];
 			dialogueBox.whenDaFinish = startCountdown;
 
@@ -2101,9 +2100,7 @@ class PlayState extends MusicBeatState
 	{
 		inCutscene = false;
 
-		#if android
-		androidControls.visible = true;
-		#end
+		
 
 		Conductor.songPosition = -(Conductor.crochet * 5);
 		swagCounter = 0;
